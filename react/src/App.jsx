@@ -1,141 +1,49 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import "./index.css";
+import { SpecialText } from "./components/SpecialText";
 import heroimage from "./assets/hero.png";
+import heroleft from "./assets/heroleft.png";
 import splash from "./assets/yellowslash.png";
-import { motion, AnimatePresence } from "framer-motion";
+import { InfiniteSlider } from "./components/InfiniteSlider";
+import m from "./assets/m.png";
+import e from "./assets/e.png";
+import r from "./assets/r.png";
+import n from "./assets/n.png";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { Home, User, Briefcase, FileText } from "lucide-react";
 
-function NavBar({ items }) {
-  const [activeTab, setActiveTab] = useState(items[0].name);
-  return (
-    <div className="fixed top-0 left-0 right-0 z-50 px-12 py-4">
-      <div className="flex items-center justify-between bg-black/90 border border-white/10 backdrop-blur-lg py-3 px-10 rounded-full shadow-2xl">
-        {/* Logo left */}
-        <span
-          style={{
-            fontFamily: "Oswald",
-            fontSize: "25px",
-            fontWeight: 700,
-            color: "#F5A623",
-            letterSpacing: "0.05em",
-          }}
-        >
-          PORTFOLIO
-        </span>
+import { Timeline, TimelineDemo } from "./components/Timeline";
+import { ContactSection } from "./components/Contact";
 
-        {/* Nav items center */}
-        <div className="flex items-center gap-2">
-          {items.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeTab === item.name;
-            return (
-              <a
-                key={item.name}
-                href={item.url}
-                onClick={() => setActiveTab(item.name)}
-                className={`relative cursor-pointer px-8 py-2 rounded-full transition-all duration-300 ${isActive ? "text-black" : "text-white/70 hover:text-white"}`}
-                style={{
-                  fontFamily: "Oswald",
-                  fontSize: "20px",
-                  fontWeight: 600,
-                  letterSpacing: "0.08em",
-                }}
-              >
-                <span className="hidden md:inline">{item.name}</span>
-                <span className="md:hidden">
-                  <Icon size={18} strokeWidth={2.5} />
-                </span>
-                {isActive && (
-                  <motion.div
-                    layoutId="lamp"
-                    className="absolute inset-0 w-full bg-[#F5A623] rounded-full -z-10"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  >
-                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-[#F5A623] rounded-t-full">
-                      <div className="absolute w-16 h-8 bg-yellow-400/40 rounded-full blur-lg -top-3 -left-4" />
-                      <div className="absolute w-10 h-6 bg-yellow-400/30 rounded-full blur-md -top-1" />
-                    </div>
-                  </motion.div>
-                )}
-              </a>
-            );
-          })}
-        </div>
 
-        {/* CTA right */}
-        <a
-          href="#"
-          style={{
-            fontFamily: "Oswald",
-            fontSize: "15px",
-            fontWeight: 600,
-            color: "#111",
-            backgroundColor: "#F5A623",
-            padding: "8px 24px",
-            borderRadius: "999px",
-            letterSpacing: "0.05em",
-          }}
-        >
-          HIRE ME
-        </a>
-      </div>
-    </div>
-  );
+
+
+
+
+
+
+const MERN_CARDS = [
+  { key:"M", label:"MongoDB",  sub:"Database", color:"#00ED64", img: m, desc:"NoSQL · Document Store · Atlas" },
+  { key:"E", label:"Express",  sub:"Backend",  color:"#F5A623", img: e, desc:"REST API · Middleware · Routing" },
+  { key:"R", label:"React",    sub:"Frontend", color:"#61DAFB", img: r, desc:"Components · Hooks · Vite" },
+  { key:"N", label:"Node.js",  sub:"Runtime",  color:"#8CC84B", img: n, desc:"V8 Engine · NPM · Streams" },
+];
+
+const ARC_R     = 280;
+const ARC_START = 205;
+const ARC_END   = 335;
+const ARC_SPEED = 50;
+
+function arcDeg2rad(d) { return (d * Math.PI) / 180; }
+function arcPolar(deg, r = ARC_R) {
+  return { x: r * Math.cos(arcDeg2rad(deg)), y: r * Math.sin(arcDeg2rad(deg)) };
 }
-
-function App() {
-  const navItems = [
-    { name: "Home", url: "#", icon: Home },
-    { name: "Skills", url: "#", icon: User },
-    { name: "Projects", url: "#", icon: Briefcase },
-    { name: "Resume", url: "#", icon: FileText },
-  ];
-  const ShimmerSpan = ({ children, style }) => (
-    <div style={{ position: "relative", display: "inline-flex" }}>
-      <div style={{ display: "flex", ...style }}>{children}</div>
-      <motion.div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(to right, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%)",
-          backgroundSize: "50% 100%",
-          backgroundRepeat: "no-repeat",
-          pointerEvents: "none",
-        }}
-        initial={{ backgroundPositionX: "200%" }}
-        animate={{ backgroundPositionX: ["-100%", "200%"] }}
-        transition={{
-          duration: 1.5,
-          delay: 1.5,
-          repeat: Infinity,
-          repeatDelay: 1.5,
-          ease: "linear",
-        }}
-      />
-    </div>
-  );
-
-  const renderText = (text, style, speed = 0.04, anim = "revealUp") =>
-    text.split("").map((char, i) => (
-      <span
-        key={i}
-        style={{
-          display: "inline-block",
-          opacity: 0,
-          animation: `${anim} 0.6s ease-in-out forwards`,
-          animationDelay: `${speed * i}s`,
-          whiteSpace: char === " " ? "pre" : "normal",
-          ...style,
-        }}
-      >
-        {char}
-      </span>
-    ));
+const ARC_CARD_ANGLES = MERN_CARDS.map(
+  (_, i) => ARC_START + ((ARC_END - ARC_START) / (MERN_CARDS.length - 1)) * i
+);
   function ShutterText({ text, style, className = "" }) {
     const [count, setCount] = useState(0);
     const characters = text.split("");
@@ -219,13 +127,300 @@ function App() {
           ))}
         </motion.div>
       </AnimatePresence>
-    );
-  }
-  return (
-    <div className="bg-[#F8FAFC] h-screen w-screen relative overflow-hidden">
-      <NavBar items={navItems} />
+    );}
+function NavBar({ items }) {
+  const [activeTab, setActiveTab] = useState(items[0].name);
 
-      <div className="absolute top-[180px] left-[540px] -translate-x-1/2 z-20 select-none cursor-pointer">
+  // ── Custom smooth eased scroll ──
+  function smoothScrollTo(targetY, duration = 1200) {
+    const startY = window.scrollY;
+    const diff   = targetY - startY;
+    let startTime = null;
+
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const elapsed  = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      window.scrollTo(0, startY + diff * easeInOutCubic(progress));
+      if (progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  // ── Section scroll targets ──
+  function getScrollTarget(name) {
+    switch (name) {
+      case "Home": {
+        return 0; // top of page
+      }
+      case "Skills": {
+        // Skills lives at ~62% through the 300vh pin wrapper
+        const pin = document.getElementById("home");
+        return pin ? pin.offsetTop + pin.scrollHeight * 0.62 : 0;
+      }
+      case "Projects": {
+        const el = document.getElementById("projects");
+        return el ? el.offsetTop - 80 : 0;
+      }
+      case "Contact": {
+        const el = document.getElementById("contact");
+        return el ? el.offsetTop - 80 : 0;
+      }
+      default:
+        return 0;
+    }
+  }
+
+  function handleClick(e, item) {
+    e.preventDefault();
+    setActiveTab(item.name);
+    smoothScrollTo(getScrollTarget(item.name), 1400);
+  }
+
+  // ── Auto-highlight active tab on scroll ──
+  useEffect(() => {
+    function onScroll() {
+      const scrollY = window.scrollY;
+      const pin     = document.getElementById("home");
+      const projects = document.getElementById("projects");
+      const contact  = document.getElementById("contact");
+
+      if (!pin || !projects || !contact) return;
+
+      const skillsStart   = pin.offsetTop + pin.scrollHeight * 0.5;
+      const projectsStart = projects.offsetTop - 200;
+      const contactStart  = contact.offsetTop - 200;
+
+      if (scrollY >= contactStart)  { setActiveTab("Contact");  return; }
+      if (scrollY >= projectsStart) { setActiveTab("Projects"); return; }
+      if (scrollY >= skillsStart)   { setActiveTab("Skills");   return; }
+      setActiveTab("Home");
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <div className="fixed top-0 left-0 right-0 z-[999] px-12 py-4  ">
+      <div className="flex items-center justify-between bg-black/90 border border-white/10 backdrop-blur-lg py-3 px-10 rounded-full shadow-2xl">
+
+        {/* Logo */}
+        <span style={{
+          fontFamily: "Oswald", fontSize: "25px", fontWeight: 700,
+          color: "#F5A623", letterSpacing: "0.05em", cursor: "pointer",
+        }}
+          onClick={() => smoothScrollTo(0, 1000)}
+        >
+          PORTFOLIO
+        </span>
+
+        {/* Nav items */}
+        <div className="flex items-center gap-2">
+          {items.map((item) => {
+            const Icon    = item.icon;
+            const isActive = activeTab === item.name;
+            return (
+              <a
+                key={item.name}
+                href={item.url}
+                onClick={(e) => handleClick(e, item)}
+                className={`relative cursor-pointer px-8 py-2 rounded-full transition-all duration-300 ${
+                  isActive ? "text-black" : "text-white/70 hover:text-white"
+                }`}
+                style={{ fontFamily: "Oswald", fontSize: "20px", fontWeight: 600, letterSpacing: "0.08em" }}
+              >
+                <span className="hidden md:inline">{item.name}</span>
+                <span className="md:hidden"><Icon size={18} strokeWidth={2.5} /></span>
+
+                {isActive && (
+                  <motion.div
+                    layoutId="lamp"
+                    className="absolute inset-0 w-full bg-[#F5A623] rounded-full -z-10"
+                    initial={false}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  >
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-[#F5A623] rounded-t-full">
+                      <div className="absolute w-16 h-8 bg-yellow-400/40 rounded-full blur-lg -top-3 -left-4" />
+                      <div className="absolute w-10 h-6 bg-yellow-400/30 rounded-full blur-md -top-1" />
+                    </div>
+                  </motion.div>
+                )}
+              </a>
+            );
+          })}
+        </div>
+
+        {/* HIRE ME */}
+        <a
+          href="#contact"
+          onClick={(e) => {
+            e.preventDefault();
+            setActiveTab("Contact");
+            smoothScrollTo(getScrollTarget("Contact"), 1400);
+          }}
+          style={{
+            fontFamily: "Oswald", fontSize: "15px", fontWeight: 600,
+            color: "#111", backgroundColor: "#F5A623",
+            padding: "8px 24px", borderRadius: "999px",
+            letterSpacing: "0.05em", textDecoration: "none", cursor: "pointer",
+          }}
+        >
+          HIRE ME
+        </a>
+
+      </div>
+    </div>
+  );
+}
+ const ShimmerSpan = ({ children, style }) => (
+    <div style={{ position: "relative", display: "inline-flex" }}>
+      <div style={{ display: "flex", ...style }}>{children}</div>
+      <motion.div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(to right, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%)",
+          backgroundSize: "50% 100%",
+          backgroundRepeat: "no-repeat",
+          pointerEvents: "none",
+        }}
+        initial={{ backgroundPositionX: "200%" }}
+        animate={{ backgroundPositionX: ["-100%", "200%"] }}
+        transition={{
+          duration: 1.5,
+          delay: 1.5,
+          repeat: Infinity,
+          repeatDelay: 1.5,
+          ease: "linear",
+        }}
+      />
+    </div>
+  );
+function App() {
+
+  const sliderImagesTop = [
+  { title: "JavaScript",    src: "./src/assets/js.png" },
+  { title: "CSS",    src: "./src/assets/css.png" },
+  { title: "Git",      src: "./src/assets/git.png" }, 
+  { title: "Github",    src: "./src/assets/github.png" },
+  { title: "TypeScript", src: "./src/assets/typesc.webp" },
+  { title: "Python",        src: "./src/assets/python.png" },
+  { title: "Github",    src: "./src/assets/github.png" },
+  { title: "Git",      src: "./src/assets/git.png" },
+   { title: "CSS",    src: "./src/assets/css.png" },
+   { title: "JavaScript",    src: "./src/assets/js.png" },
+  { title: "CSS",    src: "./src/assets/css.png" },
+];
+
+const sliderImagesBottom = [
+  { title: "Figma", src: "./src/assets/figma.png" },
+  { title: "C",     src: "./src/assets/n.png" },
+  { title: "Python",        src: "./src/assets/python.png" },
+  { title: "Redux",        src: "./src/assets/redux.png" },
+  { title: "Github",    src: "./src/assets/github.png" },
+  { title: "Git",      src: "./src/assets/git.png" },
+   { title: "CSS",    src: "./src/assets/css.png" },
+   { title: "JavaScript",    src: "./src/assets/js.png" },
+  { title: "CSS",    src: "./src/assets/css.png" },
+  { title: "Git",      src: "./src/assets/git.png" }, 
+  { title: "Github",    src: "./src/assets/github.png" },
+  { title: "TypeScript", src: "./src/assets/typesc.webp" },
+  { title: "Python",        src: "./src/assets/python.png" },
+   
+  
+];
+ 
+const [arcAngle, setArcAngle]   = useState(ARC_START);
+const [arcActive, setArcActive] = useState(0);
+const arcDirRef  = useRef(1);
+const arcLastRef = useRef(null);
+const arcRafRef  = useRef(null);
+
+useEffect(() => {
+  function tick(now) {
+    if (!arcLastRef.current) arcLastRef.current = now;
+    const dt = Math.min((now - arcLastRef.current) / 1000, 0.05);
+    arcLastRef.current = now;
+    setArcAngle(prev => {
+      let next = prev + arcDirRef.current * ARC_SPEED * dt;
+      if (next >= ARC_END)   { next = ARC_END;   arcDirRef.current = -1; }
+      if (next <= ARC_START) { next = ARC_START;  arcDirRef.current =  1; }
+      let ci = 0, minD = Infinity;
+      ARC_CARD_ANGLES.forEach((a, i) => { const d = Math.abs(a - next); if (d < minD) { minD = d; ci = i; } });
+      setArcActive(ci);
+      return next;
+    });
+    arcRafRef.current = requestAnimationFrame(tick);
+  }
+  arcRafRef.current = requestAnimationFrame(tick);
+  return () => cancelAnimationFrame(arcRafRef.current);
+}, []);
+  const pinWrapperRef = useRef(null);
+const { scrollYProgress } = useScroll({
+  target: pinWrapperRef,
+  offset: ["start start", "end end"],
+});
+
+const smooth = useSpring(scrollYProgress, { stiffness: 80, damping: 20 });
+
+const initialTextOpacity = useTransform(smooth, [0, 0.3], [1, 0]);
+const heroOpacity        = useTransform(smooth, [0.2, 0.55], [1, 0]);
+const heroX              = useTransform(smooth, [0, 0.5], ["0%", "125%"]);
+const splashX            = useTransform(smooth, [0, 0.6], ["-50%", "15%"]);
+const leftOpacity        = useTransform(smooth, [0.2, 0.55], [0, 1]);
+const leftX              = useTransform(smooth, [0.25, 0.9], ["140%", "5%"]);
+const newTextOpacity     = useTransform(smooth, [0.4, 0.75], [0, 1]);
+const newTextX           = useTransform(smooth, [0.4, 0.75], [-60, 0]);
+const odometerOpacity = useTransform(smooth, [0.55, 0.7], [0, 1]);
+const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
+
+  const navItems = [
+    { name: "Home", url: "#home", icon: Home },
+    { name: "Skills", url: "#skills", icon: User },
+    { name: "Projects", url: "#projects", icon: Briefcase },
+    { name: "Resume", url: "#", icon: FileText },
+  ];
+ 
+
+  const renderText = (text, style, speed = 0.04, anim = "revealUp") =>
+    text.split("").map((char, i) => (
+      <span
+        key={i}
+        style={{
+          display: "inline-block",
+          opacity: 0,
+          animation: `${anim} 0.6s ease-in-out forwards`,
+          animationDelay: `${speed * i}s`,
+          whiteSpace: char === " " ? "pre" : "normal",
+          ...style,
+        }}
+      >
+        {char}
+      </span>
+    ));
+    const arcCards = [
+  { ...MERN_CARDS[0], img: m },
+  { ...MERN_CARDS[1], img: e },
+  { ...MERN_CARDS[2], img: r },
+  { ...MERN_CARDS[3], img: "./src/assets/n.png" },
+];
+
+    
+  
+  return (
+    <>
+    <div id="home" ref={pinWrapperRef} style={{ height: "300vh", position: "relative" }}>
+      <div className="bg-[#F8FAFC] w-screen relative overflow-visble" style={{ position: "sticky", top: 0, height: "100vh" }}>
+      <NavBar items={navItems} />
+      <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
+      <div className="absolute top-[230px] left-[710px] -translate-x-1/2 z-20 select-none cursor-pointer">
         <ShutterText
           text="HEY"
           style={{
@@ -235,9 +430,10 @@ function App() {
             animation: "breathe 2s ease-in-out infinite",
           }}
         />  
-      </div>
+      </div></motion.div>
+      <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
       <div
-        className="absolute top-[175px]  left-[1060px] -translate-x-1/2 font-extrabold leading-none z-20 select-none whitespace-nowrap"
+        className="absolute top-[230px]  left-[1275px] -translate-x-1/2 font-extrabold leading-none z-20 select-none whitespace-nowrap"
         style={{ fontFamily: "Oswald", fontSize: "clamp(60px, 9vw, 120px)" }}
       >
         <ShutterText
@@ -249,22 +445,55 @@ function App() {
             animation: "breathe 2s ease-in-out infinite",
           }}
         />
-      </div>
+      </div></motion.div>
 
-      <img
-        src={splash}
-        className="absolute left-1/2 -translate-x-1/2 rotate-90 z-0"
-        style={{ top: "5%", height: "110%" }}
-      />
-      <img
-        src={heroimage}
-        className="absolute left-1/2  -translate-x-1/2 z-10 object-contain object-top"
-        style={{ top: "-15%", height: "110%" }}
-      />
-
+      
+      <motion.img
+  src={splash}
+  style={{
+    position: "absolute",
+    left: "50%",
+    x: splashX,
+    top: "5%",
+    height: "110%",
+    rotate: 90,
+    zIndex: 2,
+  }}
+/>
+     <motion.img
+  src={heroimage}
+  style={{
+    position: "absolute",
+    left: "50%",
+    x: heroX,
+    translateX: "-50%",
+    top: "-15%",
+    height: "110%",
+    objectFit: "contain",
+    objectPosition: "top center",
+    zIndex: 10,
+    opacity: heroOpacity,
+  }}
+/>
+<motion.img
+  src={heroleft}
+  style={{
+    position: "absolute",
+    right: 0,
+    x: leftX,
+    bottom: 0,
+    height: "90%",
+    top:"8%",
+    objectFit: "contain",
+    objectPosition: "bottom right",
+    zIndex: 10,
+    opacity: leftOpacity,
+  }}
+/>
       <div className="absolute left-[3%] z-20" style={{ top: "42%" }}>
+        <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
         <h1
-          className="absolute top-[150px] w-2xl left-[260px] leading-none cursor-pointer"
+          className="absolute top-[150px] w-2xl left-[350px] leading-none cursor-pointer"
           style={{
             display: "flex",
             overflow: "hidden",
@@ -276,14 +505,15 @@ function App() {
             "I AM|",
             {
               fontFamily: "Oswald",
-              fontSize: "clamp(48px, 7.5vw, 105px)",
+              fontSize: "clamp(58px, 7.5vw, 120px)",
               fontWeight: 800,
             },
             0.05,
           )}
-        </h1>
+        </h1></motion.div>
 
-        <p className="absolute top-[260px] left-[280px] text-red-600 font-bold leading-tight mt-1 cursor-pointer">
+        <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
+        <p className="absolute top-[260px] left-[288px] text-red-600 font-bold leading-tight mt-1 cursor-pointer">
           <ShimmerSpan
             style={{
               fontFamily: "Inter",
@@ -296,20 +526,21 @@ function App() {
               "PRIYAANSH",
               {
                 fontFamily: "Inter",
-                fontSize: "clamp(40px, 1.5vw, 40px)",
+                fontSize: "clamp(60px, 1.5vw, 60px)",
                 fontWeight: 800,
                 color: "#dc2626",
               },
               0.002,
             )}
           </ShimmerSpan>
-        </p>
+        </p></motion.div>
 
-        <p className="absolute top-[290px] left-[350px] font-bold leading-tight mt-1 cursor-pointer">
+        <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
+        <p className="absolute top-[320px] left-[389px] font-bold leading-tight mt-1 cursor-pointer">
           <ShimmerSpan
             style={{
               fontFamily: "Inter",
-              fontSize: "clamp(40px, 1.5vw, 40px)",
+              fontSize: "clamp(60px, 1.5vw, 60px)",
               fontWeight: 800,
               color: "#dc2626",
             }}
@@ -318,21 +549,23 @@ function App() {
               "PANDEY",
               {
                 fontFamily: "Inter",
-                fontSize: "clamp(40px, 1.5vw, 40px)",
+                fontSize: "clamp(60px, 1.5vw, 60px)",
                 fontWeight: 800,
                 color: "#dc2626",
               },
               0.002,
             )}
           </ShimmerSpan>
-        </p>
+        </p></motion.div>
       </div>
 
       <div
         className="absolute right-[3%] z-20 text-right"
         style={{ top: "42%" }}
       >
-        <div className="absolute top-[140px] w-2xl right-[210px] cursor-pointer">
+
+        <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
+        <div className="absolute top-[160px] w-2xl right-[40px] cursor-pointer">
           <ShimmerSpan style={{ color: "#111" }}>
             <h1
               style={{
@@ -343,20 +576,22 @@ function App() {
               }}
             >
               {renderText(
-                "|MERN",
+                "|FULLSTACK",
                 {
                   fontFamily: "Oswald",
-                  fontSize: "clamp(48px, 7.5vw, 105px)",
+                  fontSize: "clamp(60px, 7.5vw, 105px)",
                   fontWeight: 800,
                 },
                 0.05,
               )}
             </h1>
           </ShimmerSpan>
-        </div>
+        </div></motion.div>
 
+
+        <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
         <p
-          className="font-medium text-right mt-1 absolute right-[459px] top-[250px] cursor-pointer"
+          className="font-medium text-right mt-1 absolute right-[549px] top-[265px] cursor-pointer"
           style={{
             display: "flex",
             overflow: "hidden",
@@ -369,15 +604,16 @@ function App() {
             " WEB",
             {
               fontFamily: "Oswald",
-              fontSize: "clamp(30px, 7.5vw, 30px)",
+              fontSize: "clamp(60px, 7.5vw, 60px)",
               fontWeight: 800,
             },
             0.002,
           )}
-        </p>
+        </p></motion.div>
 
+        <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
         <p
-          className="font-medium text-right mt-1 absolute right-[360px] top-[280px] cursor-pointer"
+          className="font-medium text-right mt-1 absolute right-[320px] top-[310px] cursor-pointer"
           style={{
             display: "flex",
             overflow: "hidden",
@@ -390,17 +626,17 @@ function App() {
             " DEVELOPER",
             {
               fontFamily: "Oswald",
-              fontSize: "clamp(30px, 7.5vw, 30px)",
+              fontSize: "clamp(60px, 7.5vw, 60px)",
               fontWeight: 800,
             },
             0.002,
             "revealDown",
           )}
-        </p>
+        </p> </motion.div>
       </div>
-
+       <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
       <p
-        className="absolute bottom-[0px] w-2xl left-1/2  -translate-x-1/2 text-gray-800 whitespace-nowrap cursor-pointer z-20"
+        className="absolute bottom-[18px] w-9xl left-1/2  -translate-x-1/2 text-gray-800 whitespace-nowrap cursor-pointer z-20"
         style={{
           display: "flex",
           overflow: "hidden",
@@ -413,15 +649,441 @@ function App() {
           "Developing modern web experiences and designs",
           {
             fontFamily: "Oswald",
-            fontSize: "clamp(30px, 7.5vw, 30px)",
+            fontSize: "clamp(40px, 7.5vw, 40px)",
             fontWeight: 800,
           },
           0.002,
           "revealDown",
         )}
-      </p>
-    </div>
-  );
+      </p></motion.div>
+
+   
+<motion.div 
+
+style={{
+  opacity: odometerOpacity,
+  y: odometerY,
+  pointerEvents: "auto"
+}}
+>
+  
+     {(() => {
+      
+const ODOMETER_X = "35%";   // move left/right easily
+const ODOMETER_Y = "-350px"; // move up/down easily
+
+const CENTER_X = 550;
+const CENTER_Y = 250;
+const scaleX = 1100 / 840;
+const scaleY = 650 / 840;
+
+
+
+const CX = 0, CY = 0;
+const OUTER = 420;
+const INNER = 260;
+
+const DEG_START = 190;
+const DEG_END = 350;
+
+function pt(deg, r) {
+  const rad = (deg * Math.PI) / 180;
+  return [r * Math.cos(rad), r * Math.sin(rad)];
 }
 
-export default App;
+function arc(r, s, e) {
+  const [sx, sy] = pt(s, r);
+  const [ex, ey] = pt(e, r);
+  const large = e - s > 180 ? 1 : 0;
+  return `M ${sx} ${sy} A ${r} ${r} 0 ${large} 1 ${ex} ${ey}`;
+}
+
+function thick(r1, r2, s, e) {
+  const [o1x,o1y] = pt(s,r1)
+  const [o2x,o2y] = pt(e,r1)
+  const [i1x,i1y] = pt(s,r2)
+  const [i2x,i2y] = pt(e,r2)
+  const large = e-s>180?1:0
+
+  return `
+  M ${o1x} ${o1y}
+  A ${r1} ${r1} 0 ${large} 1 ${o2x} ${o2y}
+  L ${i2x} ${i2y}
+  A ${r2} ${r2} 0 ${large} 0 ${i1x} ${i1y}
+  Z`
+}
+
+const segCount = MERN_CARDS.length
+
+const SEG_SIZE = (DEG_END - DEG_START) / segCount
+
+const CARD_ANGLES = MERN_CARDS.map((_, i) =>
+  DEG_START + SEG_SIZE * i + SEG_SIZE / 2
+)
+
+const needleProgress = (arcAngle - ARC_START) / (ARC_END - ARC_START);
+const needleDeg = DEG_START + needleProgress*(DEG_END-DEG_START)
+
+const [ntx,nty] = pt(needleDeg, OUTER-10)
+const [nbx,nby] = pt(needleDeg+180,50)
+const [nl1x,nl1y] = pt(needleDeg+90,7)
+const [nl2x,nl2y] = pt(needleDeg-90,7)
+
+return (
+
+<motion.div
+style={{
+position:"relative",
+left:ODOMETER_X,
+bottom:ODOMETER_Y,
+transform:"translateX(-50%)",
+width:"1100px",
+height:"650px",
+pointerEvents:"auto"
+}}
+>
+
+<svg
+viewBox="-420 -420 840 840"
+width="1100"
+height="650"
+style={{
+position:"absolute",
+left:"0",
+top:"0"
+}}
+>
+
+<defs>
+
+{/* glass gradient */}
+<radialGradient id="glass">
+<stop offset="0%" stopColor="#ffffff"/>
+<stop offset="100%" stopColor="#eaeaea"/>
+</radialGradient>
+
+{/* animated sweep */}
+<linearGradient id="sweep" gradientUnits="userSpaceOnUse">
+<stop offset="0%" stopColor="#ffffff00"/>
+<stop offset="50%" stopColor="#ffffffaa"/>
+<stop offset="100%" stopColor="#ffffff00"/>
+<animateTransform
+attributeName="gradientTransform"
+type="rotate"
+from="0"
+to="360"
+dur="1s"
+repeatCount="indefinite"
+/>
+</linearGradient>
+
+{/* neon glow */}
+<filter id="neon">
+<feGaussianBlur stdDeviation="6"/>
+</filter>
+
+{/* shadow */}
+<filter id="shadow">
+<feDropShadow dx="0" dy="10" stdDeviation="12" floodOpacity="0.25"/>
+</filter>
+
+</defs>
+
+{/* dial base */}
+<path
+d={thick(OUTER,INNER,DEG_START,DEG_END)}
+fill="url(#glass)"
+filter="url(#shadow)"
+/>
+
+{/* segments */}
+{MERN_CARDS.map((card,i)=>{
+
+const s = DEG_START + ((DEG_END-DEG_START)/segCount)*i
+const e = DEG_START + ((DEG_END-DEG_START)/segCount)*(i+1)
+
+const active = arcActive===i
+
+return(
+
+<g key={i}>
+
+<path
+d={thick(OUTER-2,INNER+2,s+1,e-1)}
+fill={card.color}
+opacity={active?0.7:0.25}
+style={{transition:"all .4s"}}
+/>
+
+{active && (
+<path
+d={thick(OUTER-2,INNER+2,s+1,e-1)}
+fill={card.color}
+opacity=".5"
+filter="url(#neon)"
+/>
+)}
+
+</g>
+
+)
+
+})}
+{/* MERN letters on segments */}
+{["M","E","R","N"].map((letter,i)=>{
+
+const s = DEG_START + ((DEG_END-DEG_START)/segCount)*i
+const e = DEG_START + ((DEG_END-DEG_START)/segCount)*(i+1)
+
+const pathId = `mernArc${i}`
+
+return(
+
+<g key={i}>
+
+{/* invisible path for text */}
+<path
+id={pathId}
+d={arc((OUTER+INNER)/2 , s+3 , e-3)}
+fill="none"
+/>
+
+<text
+fontSize="42"
+fontWeight="800"
+fill="#222"
+letterSpacing="6"
+>
+
+<textPath
+href={`#${pathId}`}
+startOffset="50%"
+textAnchor="middle"
+>
+
+{letter}
+
+</textPath>
+
+</text>
+
+</g>
+
+)
+
+})}
+
+{/* sweep highlight */}
+<path
+d={arc(OUTER-6,DEG_START,DEG_END)}
+stroke="url(#sweep)"
+strokeWidth="12"
+strokeLinecap="round"
+fill="none"
+/>
+
+{/* outer rim */}
+<path
+d={arc(OUTER,DEG_START,DEG_END)}
+stroke="#cfcfcf"
+strokeWidth="3"
+fill="none"
+/>
+
+{/* ticks */}
+{CARD_ANGLES.map((deg,i)=>{
+
+const [a1,a2] = pt(deg,INNER-12)
+const [b1,b2] = pt(deg,OUTER+8)
+
+const active = arcActive===i
+
+return(
+
+<line
+key={i}
+x1={a1}
+y1={a2}
+x2={b1}
+y2={b2}
+stroke={active?MERN_CARDS[i].color:"#aaa"}
+strokeWidth={active?3:1.5}
+/>
+
+)
+
+})}
+
+{/* needle */}
+<g>
+
+<polygon
+points={`${ntx},${nty} ${nl1x},${nl1y} ${nbx},${nby} ${nl2x},${nl2y}`}
+fill="#ff9d00"
+filter="url(#neon)"
+/>
+
+<circle cx="0" cy="0" r="20" fill="#111"/>
+<circle cx="0" cy="0" r="10" fill="#ff9d00"/>
+
+</g>
+
+</svg>
+
+{/* cards */}
+
+{MERN_CARDS.map((card,i)=>{
+
+const deg = CARD_ANGLES[i]
+const active = arcActive===i
+const CARD_SIZE = active ? 200 : 180
+const CIRCLE_R = OUTER -70
+const [x,y] = pt(deg, CIRCLE_R)
+
+
+
+return(
+
+<div
+key={i}
+style={{
+position:"absolute",
+left:`${CENTER_X + x}px`,
+top:`${CENTER_Y + y}px`,
+transform:"translate(-50%,-50%)",
+zIndex:active?20:10
+}}
+>
+
+<div
+style={{
+width:active?200:180,
+height:active?200:180,
+borderRadius:"50%",
+background:"rgba(255,255,255,.85)",
+border:`2px solid ${card.color}`,
+boxShadow:active
+?`0 0 25px ${card.color},0 10px 20px rgba(0,0,0,.2)`
+:"0 5px 15px rgba(0,0,0,.1)",
+display:"flex",
+alignItems:"center",
+justifyContent:"center",
+backdropFilter:"blur(10px)",
+transition:"all .45s"
+}}
+>
+
+<img
+src={card.img}
+style={{
+width:"auto",
+height:"auto",
+filter:active?`drop-shadow(0 0 10px ${card.color})`:"grayscale(.6)"
+}}
+/>
+
+</div>
+
+</div>
+
+)
+
+})}
+
+</motion.div>
+
+)
+
+})()}</motion.div>
+
+<motion.div style={{
+  opacity: useTransform(smooth, [0.82, 1], [0, 1]),
+  y: useTransform(smooth, [0.82, 1], [30, 0]),
+  position: "absolute",
+  left: "810px",
+  top: "100px",
+  zIndex: 30,
+}}>
+  <h1  style={{
+    fontFamily: "Oswald, sans-serif",
+    fontSize: "clamp(2rem, 4vw, 3.5rem)",
+    fontWeight: 900,
+    color: "#111",
+    letterSpacing: "4px",
+  }}>
+    My SkillSet
+  </h1>
+</motion.div>
+{/* ══ INFINITE SLIDER SECTION ══ */}
+<motion.section id="skills" style={{
+  width: "100%",
+  background: "#F8FAFC",
+  padding: "90px 0 60px",
+   marginTop: "-30px",
+   marginLeft:"50px",
+   opacity: useTransform(smooth, [0.85, 1], [0, 1]),
+    y: useTransform(smooth, [0.85, 1], [60, 0]),
+   
+  overflow: "hidden",
+}}>
+  
+
+  {/* ROW 1 — left to right */}
+  <div  style={{ width: "68%", marginLeft: "0px", overflow: "hidden" }}>
+  <InfiniteSlider gap={5} duration={40} durationOnHover={100}>
+    {sliderImagesTop.map((img) => (
+      <div key={img.title} style={{
+        width: 130, height: 130, borderRadius: 20, overflow: "hidden",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+        border: "1px solid rgba(0,0,0,0.06)",
+        flexShrink: 0,
+      }}>
+        <img
+          src={img.src}
+          alt={img.title}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        />
+      </div>
+    ))}
+  </InfiniteSlider>
+
+  <div style={{ height: 20 }} /></div>
+
+  {/* ROW 2 — right to left */}
+  <div style={{ width: "68%", marginLeft: "0px", overflow: "hidden" }}>
+  <InfiniteSlider gap={5} duration={40} durationOnHover={100} reverse>
+    {sliderImagesBottom.map((img) => (
+      <div key={img.title} style={{
+        width: 130, height: 130, borderRadius: 20, overflow: "hidden",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+        border: "1px solid rgba(0,0,0,0.06)",
+        flexShrink: 0,
+      }}>
+        <img
+          src={img.src}
+          alt={img.title}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        />
+      </div>
+    ))}
+  </InfiniteSlider>
+  </div>
+  
+</motion.section>
+
+   </div>
+    </div>
+ 
+  
+      <div id="projects">
+      <TimelineDemo />
+    </div>
+   <ContactSection />
+    
+    </>
+  );
+  
+}
+
+export default App; 
+    
