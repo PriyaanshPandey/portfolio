@@ -420,7 +420,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
       <div className="bg-[#F8FAFC] w-screen relative overflow-visble" style={{ position: "sticky", top: 0, height: "100vh" }}>
       <NavBar items={navItems} />
       <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
-      <div className="absolute top-[230px] left-[710px] -translate-x-1/2 z-20 select-none cursor-pointer">
+      <div className="absolute top-[200px] left-[515px] -translate-x-1/2 z-20 select-none cursor-pointer">
         <ShutterText
           text="HEY"
           style={{
@@ -433,7 +433,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
       </div></motion.div>
       <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
       <div
-        className="absolute top-[230px]  left-[1275px] -translate-x-1/2 font-extrabold leading-none z-20 select-none whitespace-nowrap"
+        className="absolute top-[200px]  left-[1025px] -translate-x-1/2 font-extrabold leading-none z-20 select-none whitespace-nowrap"
         style={{ fontFamily: "Oswald", fontSize: "clamp(60px, 9vw, 120px)" }}
       >
         <ShutterText
@@ -452,7 +452,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
   src={splash}
   style={{
     position: "absolute",
-    left: "50%",
+    left: "49%",
     x: splashX,
     top: "5%",
     height: "110%",
@@ -464,7 +464,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
   src={heroimage}
   style={{
     position: "absolute",
-    left: "50%",
+    left: "48%",
     x: heroX,
     translateX: "-50%",
     top: "-15%",
@@ -493,7 +493,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
       <div className="absolute left-[3%] z-20" style={{ top: "42%" }}>
         <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
         <h1
-          className="absolute top-[150px] w-2xl left-[350px] leading-none cursor-pointer"
+          className="absolute top-[100px] w-2xl left-[205px] leading-none cursor-pointer"
           style={{
             display: "flex",
             overflow: "hidden",
@@ -513,7 +513,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
         </h1></motion.div>
 
         <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
-        <p className="absolute top-[260px] left-[288px] text-red-600 font-bold leading-tight mt-1 cursor-pointer">
+        <p className="absolute top-[260px] left-[140px] text-red-600 font-bold leading-tight mt-1 cursor-pointer">
           <ShimmerSpan
             style={{
               fontFamily: "Inter",
@@ -536,7 +536,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
         </p></motion.div>
 
         <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
-        <p className="absolute top-[320px] left-[389px] font-bold leading-tight mt-1 cursor-pointer">
+        <p className="absolute top-[320px] left-[260px] font-bold leading-tight mt-1 cursor-pointer">
           <ShimmerSpan
             style={{
               fontFamily: "Inter",
@@ -565,7 +565,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
       >
 
         <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
-        <div className="absolute top-[160px] w-2xl right-[40px] cursor-pointer">
+        <div className="absolute top-[100px] w-2xl right-[-35px] cursor-pointer">
           <ShimmerSpan style={{ color: "#111" }}>
             <h1
               style={{
@@ -579,7 +579,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
                 "|FULLSTACK",
                 {
                   fontFamily: "Oswald",
-                  fontSize: "clamp(60px, 7.5vw, 105px)",
+                  fontSize: "clamp(50px, 7.5vw, 100px)",
                   fontWeight: 800,
                 },
                 0.05,
@@ -591,7 +591,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
 
         <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
         <p
-          className="font-medium text-right mt-1 absolute right-[549px] top-[265px] cursor-pointer"
+          className="font-medium text-right mt-1 absolute right-[450px] top-[275px] cursor-pointer"
           style={{
             display: "flex",
             overflow: "hidden",
@@ -613,7 +613,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
 
         <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
         <p
-          className="font-medium text-right mt-1 absolute right-[320px] top-[310px] cursor-pointer"
+          className="font-medium text-right mt-1 absolute right-[225px] top-[320px] cursor-pointer"
           style={{
             display: "flex",
             overflow: "hidden",
@@ -636,7 +636,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
       </div>
        <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
       <p
-        className="absolute bottom-[18px] w-9xl left-1/2  -translate-x-1/2 text-gray-800 whitespace-nowrap cursor-pointer z-20"
+        className="absolute bottom-[12px] w-9xl left-1/2  -translate-x-1/2 text-gray-800 whitespace-nowrap cursor-pointer z-20"
         style={{
           display: "flex",
           overflow: "hidden",
@@ -669,8 +669,8 @@ style={{
   
      {(() => {
       
-const ODOMETER_X = "35%";   // move left/right easily
-const ODOMETER_Y = "-350px"; // move up/down easily
+const ODOMETER_X = "20%";   // move left/right easily
+const ODOMETER_Y = "-240px"; // move up/down easily
 
 const CENTER_X = 550;
 const CENTER_Y = 250;
@@ -680,7 +680,7 @@ const scaleY = 650 / 840;
 
 
 const CX = 0, CY = 0;
-const OUTER = 420;
+const OUTER = 380;
 const INNER = 260;
 
 const DEG_START = 190;
@@ -830,7 +830,7 @@ filter="url(#neon)"
 
 })}
 {/* MERN letters on segments */}
-{["M","E","R","N"].map((letter,i)=>{
+{["Mongo","Express","React","Node"].map((letter,i)=>{
 
 const s = DEG_START + ((DEG_END-DEG_START)/segCount)*i
 const e = DEG_START + ((DEG_END-DEG_START)/segCount)*(i+1)
@@ -937,7 +937,7 @@ filter="url(#neon)"
 const deg = CARD_ANGLES[i]
 const active = arcActive===i
 const CARD_SIZE = active ? 200 : 180
-const CIRCLE_R = OUTER -70
+const CIRCLE_R = OUTER -90
 const [x,y] = pt(deg, CIRCLE_R)
 
 
@@ -957,8 +957,8 @@ zIndex:active?20:10
 
 <div
 style={{
-width:active?200:180,
-height:active?200:180,
+width:active?150:140,
+height:active?150:140,
 borderRadius:"50%",
 background:"rgba(255,255,255,.85)",
 border:`2px solid ${card.color}`,
@@ -1000,13 +1000,13 @@ filter:active?`drop-shadow(0 0 10px ${card.color})`:"grayscale(.6)"
   opacity: useTransform(smooth, [0.82, 1], [0, 1]),
   y: useTransform(smooth, [0.82, 1], [30, 0]),
   position: "absolute",
-  left: "810px",
-  top: "100px",
+  left: "500px",
+  top: "80px",
   zIndex: 30,
 }}>
   <h1  style={{
     fontFamily: "Oswald, sans-serif",
-    fontSize: "clamp(2rem, 4vw, 3.5rem)",
+    fontSize: "clamp(2rem, 5vw, 4.5rem)",
     fontWeight: 900,
     color: "#111",
     letterSpacing: "4px",
@@ -1018,8 +1018,8 @@ filter:active?`drop-shadow(0 0 10px ${card.color})`:"grayscale(.6)"
 <motion.section id="skills" style={{
   width: "100%",
   background: "#F8FAFC",
-  padding: "90px 0 60px",
-   marginTop: "-30px",
+  padding: "90px 0 30px",
+   marginTop: "-150px",
    marginLeft:"50px",
    opacity: useTransform(smooth, [0.85, 1], [0, 1]),
     y: useTransform(smooth, [0.85, 1], [60, 0]),
@@ -1033,7 +1033,7 @@ filter:active?`drop-shadow(0 0 10px ${card.color})`:"grayscale(.6)"
   <InfiniteSlider gap={5} duration={40} durationOnHover={100}>
     {sliderImagesTop.map((img) => (
       <div key={img.title} style={{
-        width: 130, height: 130, borderRadius: 20, overflow: "hidden",
+        width: 100, height: 100, borderRadius: 20, overflow: "hidden",
         boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
         border: "1px solid rgba(0,0,0,0.06)",
         flexShrink: 0,
@@ -1054,7 +1054,7 @@ filter:active?`drop-shadow(0 0 10px ${card.color})`:"grayscale(.6)"
   <InfiniteSlider gap={5} duration={40} durationOnHover={100} reverse>
     {sliderImagesBottom.map((img) => (
       <div key={img.title} style={{
-        width: 130, height: 130, borderRadius: 20, overflow: "hidden",
+        width: 100, height: 100, borderRadius: 20, overflow: "hidden",
         boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
         border: "1px solid rgba(0,0,0,0.06)",
         flexShrink: 0,
