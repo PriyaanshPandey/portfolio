@@ -17,7 +17,14 @@ import { Home, User, Briefcase, FileText } from "lucide-react";
 
 import { Timeline, TimelineDemo } from "./components/Timeline";
 import { ContactSection } from "./components/Contact";
-
+import jsImg     from "./assets/js.png";
+import cssImg    from "./assets/css.png";
+import gitImg    from "./assets/git.png";
+import githubImg from "./assets/github.png";
+import tsImg     from "./assets/typesc.webp";
+import pythonImg from "./assets/python.png";
+import figmaImg  from "./assets/figma.png";
+import reduxImg  from "./assets/redux.png";
 
 
 
@@ -306,33 +313,32 @@ function NavBar({ items }) {
 function App() {
 
   const sliderImagesTop = [
-  { title: "JavaScript",    src: "./src/assets/js.png" },
-  { title: "CSS",    src: "./src/assets/css.png" },
-  { title: "Git",      src: "./src/assets/git.png" }, 
-  { title: "Github",    src: "./src/assets/github.png" },
-  { title: "TypeScript", src: "./src/assets/typesc.webp" },
-  { title: "Python",        src: "./src/assets/python.png" },
-  { title: "Github",    src: "./src/assets/github.png" },
-  { title: "Git",      src: "./src/assets/git.png" },
-   { title: "CSS",    src: "./src/assets/css.png" },
-   { title: "JavaScript",    src: "./src/assets/js.png" },
-  { title: "CSS",    src: "./src/assets/css.png" },
+  { title: "JavaScript",    src: jsImg },
+  { title: "CSS",    src: cssImg },
+  { title: "Git",      src: gitImg }, 
+  { title: "Github",    src: githubImg },
+  { title: "TypeScript", src: tsImg },
+  { title: "Python",        src: pythonImg },
+  { title: "Github1",    src: githubImg },
+  { title: "Git1",      src: gitImg },
+   { title: "CSS1",    src: cssImg },
+   { title: "JavaScript1",    src: jsImg },
+  { title: "CSS2",    src: cssImg },
 ];
 
 const sliderImagesBottom = [
-  { title: "Figma", src: "./src/assets/figma.png" },
-  { title: "C",     src: "./src/assets/n.png" },
-  { title: "Python",        src: "./src/assets/python.png" },
-  { title: "Redux",        src: "./src/assets/redux.png" },
-  { title: "Github",    src: "./src/assets/github.png" },
-  { title: "Git",      src: "./src/assets/git.png" },
-   { title: "CSS",    src: "./src/assets/css.png" },
-   { title: "JavaScript",    src: "./src/assets/js.png" },
-  { title: "CSS",    src: "./src/assets/css.png" },
-  { title: "Git",      src: "./src/assets/git.png" }, 
-  { title: "Github",    src: "./src/assets/github.png" },
-  { title: "TypeScript", src: "./src/assets/typesc.webp" },
-  { title: "Python",        src: "./src/assets/python.png" },
+  { title: "Figma", src: figmaImg },
+  { title: "Python",        src: pythonImg },
+  { title: "Redux",        src: reduxImg },
+  { title: "Github",    src: githubImg },
+  { title: "Git",      src: gitImg },
+   { title: "CSS",    src: cssImg },
+   { title: "JavaScript",    src: jsImg },
+  { title: "CSS1",    src: cssImg },
+  { title: "Git1",      src: gitImg }, 
+  { title: "Github1",    src: githubImg },
+  { title: "TypeScript", src: tsImg },
+  { title: "Python2",        src: pythonImg },
    
   
 ];
