@@ -25,7 +25,7 @@ import tsImg     from "./assets/typesc.webp";
 import pythonImg from "./assets/python.png";
 import figmaImg  from "./assets/figma.png";
 import reduxImg  from "./assets/redux.png";
-
+import { AnimatedThemeToggler } from "./components/AnimatedThemeToggler";
 
 
 
@@ -214,7 +214,7 @@ function NavBar({ items }) {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[999] px-12 py-4  ">
+    <div className="fixed top-0 left-0 right-0 z-[999]  ">
       <div className="flex items-center justify-between bg-black/90 border border-white/10 backdrop-blur-lg py-3 px-10 rounded-full shadow-2xl">
 
       
@@ -262,7 +262,7 @@ function NavBar({ items }) {
             );
           })}
         </div>
-
+<AnimatedThemeToggler /> 
        
         <a
           href="#contact"
@@ -424,7 +424,10 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
   return (
     <>
     <div id="home" ref={pinWrapperRef} style={{ height: "300vh", position: "relative" }}>
-      <div className="bg-[#F8FAFC] w-screen relative overflow-visble" style={{ position: "sticky", top: 0, height: "100vh" }}>
+      <div className="bg-[#F8FAFC] w-screen relative  hero-sticky" style={{ 
+  position: "sticky", top: 0, height: "100vh", overflow: "hidden",
+  transition: "background-color 0.6s ease",   
+}}>
       <NavBar items={navItems} />
       <motion.div style={{ opacity: initialTextOpacity, pointerEvents: "none" }}>
       <div className="absolute top-[200px] left-[515px] -translate-x-1/2 z-20 select-none cursor-pointer">
@@ -457,6 +460,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
       
       <motion.img
   src={splash}
+  className="splash-img"
   style={{
     position: "absolute",
     left: "49%",
@@ -997,7 +1001,7 @@ filter:active?`drop-shadow(0 0 10px ${card.color})`:"grayscale(.6)"
 
 })()}</motion.div>
 
-<motion.div style={{
+<motion.div  className="skillset-heading" style={{
   opacity: useTransform(smooth, [0.82, 1], [0, 1]),
   y: useTransform(smooth, [0.82, 1], [30, 0]),
   position: "absolute",
@@ -1009,18 +1013,18 @@ filter:active?`drop-shadow(0 0 10px ${card.color})`:"grayscale(.6)"
     fontFamily: "Oswald, sans-serif",
     fontSize: "clamp(2rem, 5vw, 4.5rem)",
     fontWeight: 900,
-    color: "#111",
+    color: "var(--text-main)",
     letterSpacing: "4px",
   }}>
     My SkillSet
   </h1>
 </motion.div>
 
-<motion.section id="skills" style={{
+<motion.section id="skills" className="skills-section" style={{
   width: "100%",
   background: "#F8FAFC",
-  padding: "90px 0 30px",
-   marginTop: "-150px",
+  padding: "60px 0 30px",
+   marginTop: "-100px",
    marginLeft:"50px",
    opacity: useTransform(smooth, [0.85, 1], [0, 1]),
     y: useTransform(smooth, [0.85, 1], [60, 0]),
@@ -1033,9 +1037,11 @@ filter:active?`drop-shadow(0 0 10px ${card.color})`:"grayscale(.6)"
   <div  style={{ width: "68%", marginLeft: "0px", overflow: "hidden" }}>
   <InfiniteSlider gap={5} duration={40} durationOnHover={100}>
     {sliderImagesTop.map((img) => (
-      <div key={img.title} style={{
+      <div key={img.title} className="slider-icon-card" style={{
         width: 100, height: 100, borderRadius: 20, overflow: "hidden",
         boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+         backgroundColor: "var(--bg-card)",  
+         transition: "background-color 0.5s",
         border: "1px solid rgba(0,0,0,0.06)",
         flexShrink: 0,
       }}>

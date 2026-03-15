@@ -1,4 +1,89 @@
+/* Hardcoded text elements in hero */
+html.dark .hero-sticky h1,
+html.dark .hero-sticky p,
+html.dark .hero-sticky span {
+  color: var(--text-main) !important;
+}
 
+/* ShimmerSpan wrapper text */
+html.dark .hero-sticky [style*="color: #111"],
+html.dark .hero-sticky [style*="color:#111"] {
+  color: var(--text-main) !important;
+}
+
+/* The renderText spans get their color from parent — force white */
+html.dark .hero-sticky .absolute span {
+  color: var(--text-main) !important;
+}
+
+/* Tagline at bottom */
+html.dark .hero-sticky .text-gray-800 {
+  color: var(--text-muted) !important;
+}
+
+
+/* ── Remove any previous dark mode css you added and use ONLY this ── */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 9999; }
+
+/* ── Variables ── */
+:root {
+  --bg: #F8FAFC;
+  --bg-card: #ffffff;
+  --text-main: #111111;
+  --text-muted: #555555;
+  --slider-bg: #F8FAFC;
+}
+
+html.dark {
+  --bg: #111111;
+  --bg-card: #1c1c1c;
+  --text-main: #f0f0f0;
+  --text-muted: #aaaaaa;
+  --slider-bg: #111111;
+}
+
+/* ── Body ── */
+html.dark body {
+  background-color: var(--bg);
+}
+
+/* ── Hero sticky container — this is the KEY one ── */
+html.dark .hero-sticky {
+  background-color: var(--bg) !important;
+}
+
+/* ── Skills slider section ── */
+html.dark .skills-section {
+  background-color: var(--slider-bg) !important;
+}
+
+/* ── Slider icon cards ── */
+html.dark .slider-icon-card {
+  background-color: var(--bg-card) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* ── Odometer text ── */
+html.dark .odometer-text {
+  fill: #eeeeee !important;
+}
+
+/* ── My SkillSet heading ── */
+html.dark .skillset-heading {
+  color: var(--text-main) !important;
+}
+
+/* ── Projects section ── */
+html.dark #projects {
+  background-color: var(--bg) !important;
+}
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
@@ -23,4 +108,42 @@
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-6px); }
+}
+/* View Transition — circular wipe */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* Dark mode base colors */
+.dark {
+  background-color: #0f0f0f;
+  color: #f0f0f0;
+}
+.dark .bg-\[#F8FAFC\] {
+  background-color: #111 !important;
+}
+.dark .bg-\[#F8FAFC\] * {
+  color: #f0f0f0;
+}
+/* Splash image — boost saturation in dark mode so yellow pops */
+html.dark .splash-img {
+  filter: brightness(1.1) saturate(1.3) !important;
+  mix-blend-mode: screen !important;  /* ← this makes it glow on dark bg */
+}
+html.dark .hero-sticky [style*="background: linear-gradient"],
+html.dark .hero-sticky [style*="background:linear-gradient"] {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255,255,255,0.15) 50%,
+    transparent 100%
+  ) !important;
 }
