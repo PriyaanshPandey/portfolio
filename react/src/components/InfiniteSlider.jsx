@@ -17,8 +17,7 @@ export function InfiniteSlider({
 
   function run(dur) {
     if (!width) return;
-    // width of innerRef = 2 sets of children + gaps
-    // one set = width / 2
+    
     const half = width / 2;
     const from = reverse ? -half : 0;
     const to   = reverse ? 0    : -half;

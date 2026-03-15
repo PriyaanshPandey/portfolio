@@ -1,14 +1,4 @@
-/**
- * Timeline.jsx
- *
- * INSTALL DEPS FIRST:
- *   npm install gsap @studio-freight/lenis
- *
- * Then in your App.jsx just do:
- *   import { TimelineDemo } from "./components/Timeline";
- *   ...
- *   <TimelineDemo />
- */
+
 import nagrikImg from "./Nagrik.png";
 import dishaImg  from "./disha.png";
 import kadamImg  from "./kadam.png";
@@ -27,22 +17,20 @@ import Lenis from "@studio-freight/lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ═══════════════════════════════════════════════════
-   PARALLAX HERO  — GSAP + Lenis layered scroll effect
-══════════════════════════════════════════════════════ */
+
 function ParallaxHero() {
   const wrapRef      = useRef(null);
   const lenisRef     = useRef(null);
 
   useEffect(() => {
-    /* Lenis smooth scroll ── only scoped to window */
+   
     const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
     lenisRef.current = lenis;
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
 
-    /* Parallax timeline */
+   
     const trigger = wrapRef.current?.querySelector("[data-parallax-layers]");
     if (trigger) {
       const tl = gsap.timeline({
@@ -86,7 +74,7 @@ function ParallaxHero() {
         background: "#060606",
       }}
     >
-      {/* ── Layer stack ── */}
+   
       <div
         data-parallax-layers
         style={{
@@ -96,7 +84,7 @@ function ParallaxHero() {
           height: "100%",
         }}
       >
-        {/* BG gradient layer 1 */}
+       
         <div
           data-parallax-layer="1"
           style={{
@@ -107,7 +95,7 @@ function ParallaxHero() {
           }}
         />
 
-        {/* Big background project image — layer 2 */}
+        
         <img
           data-parallax-layer="2"
           src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1800&q=80"
@@ -124,7 +112,7 @@ function ParallaxHero() {
           }}
         />
 
-        {/* ── Centre text — layer 3 ── */}
+      
         <div
           data-parallax-layer="3"
           style={{
@@ -137,7 +125,7 @@ function ParallaxHero() {
             zIndex: 10,
           }}
         >
-          {/* Eyebrow */}
+       
           <div style={{
             fontFamily: "Oswald, sans-serif",
             fontSize: "11px",
@@ -154,7 +142,7 @@ function ParallaxHero() {
             <div style={{ width: "30px", height: "1px", background: "#F5A623" }} />
           </div>
 
-          {/* Giant heading */}
+          
           <h1 style={{
             fontFamily: "Oswald, sans-serif",
             fontSize: "clamp(5rem, 12vw, 12rem)",
@@ -184,7 +172,7 @@ function ParallaxHero() {
             Things I've built that I'm proud of
           </p>
 
-          {/* Scroll indicator */}
+          
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
@@ -206,7 +194,7 @@ function ParallaxHero() {
           </motion.div>
         </div>
 
-        {/* Foreground vignette — layer 4 */}
+        
         <div
           data-parallax-layer="4"
           style={{
@@ -220,7 +208,7 @@ function ParallaxHero() {
         />
       </div>
 
-      {/* Bottom fade into cards section */}
+      
       <div style={{
         position: "absolute",
         bottom: 0,
@@ -234,9 +222,7 @@ function ParallaxHero() {
   );
 }
 
-/* ═══════════════════════════════════════════════════
-   TECH TAG
-══════════════════════════════════════════════════════ */
+
 function TechTag({ label }) {
   const [hov, setHov] = useState(false);
   return (
@@ -262,9 +248,7 @@ function TechTag({ label }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════
-   PROJECT CARD — image + 3D tilt + glow
-══════════════════════════════════════════════════════ */
+
 function ProjectCard({ project, index }) {
   const cardRef = useRef(null);
   const rotX    = useMotionValue(0);
@@ -310,7 +294,7 @@ function ProjectCard({ project, index }) {
         padding: "0 80px",
       }}>
 
-        {/* ── Year column ── */}
+       
         <div style={{
           flexShrink: 0,
           width: "155px",
@@ -343,7 +327,7 @@ function ProjectCard({ project, index }) {
           </div>
         </div>
 
-        {/* ── Dot ── */}
+
         <div style={{ flexShrink: 0, zIndex: 2 }}>
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
@@ -360,7 +344,7 @@ function ProjectCard({ project, index }) {
           />
         </div>
 
-        {/* ── 3D Card ── */}
+       
         <motion.div
           ref={cardRef}
           onMouseMove={onMove}
@@ -384,7 +368,7 @@ function ProjectCard({ project, index }) {
             position: "relative",
           }}>
 
-            {/* Mouse glow */}
+           
             <motion.div style={{
               position: "absolute",
               inset: 0,
@@ -396,7 +380,7 @@ function ProjectCard({ project, index }) {
               ),
             }} />
 
-            {/* Left amber border */}
+           
             <div style={{
               position: "absolute",
               left: 0, top: 0, bottom: 0,
@@ -405,7 +389,7 @@ function ProjectCard({ project, index }) {
               zIndex: 10,
             }} />
 
-            {/* ── Project Image ── */}
+           
             <div
               style={{
                 width: "100%",
@@ -431,14 +415,14 @@ function ProjectCard({ project, index }) {
                 }}
               />
 
-              {/* Image overlay gradient */}
+          
               <div style={{
                 position: "absolute",
                 inset: 0,
                 background: "linear-gradient(to bottom, transparent 40%, #161616 100%)",
               }} />
 
-              {/* Category badge on image */}
+            
               <div style={{
                 position: "absolute",
                 top: "20px",
@@ -455,14 +439,14 @@ function ProjectCard({ project, index }) {
               </div>
             </div>
 
-            {/* ── Card body ── */}
+        
             <div style={{ padding: "40px 48px 44px" }}>
 
-              {/* Corner brackets */}
+           
               <div style={{ position: "absolute", top: "20px", right: "20px", width: "22px", height: "22px", borderTop: "1.5px solid rgba(245,166,35,0.2)", borderRight: "1.5px solid rgba(245,166,35,0.2)" }} />
               <div style={{ position: "absolute", bottom: "20px", right: "20px", width: "22px", height: "22px", borderBottom: "1.5px solid rgba(245,166,35,0.3)", borderRight: "1.5px solid rgba(245,166,35,0.3)" }} />
 
-              {/* Index */}
+              
               <div style={{
                 fontFamily: "Oswald, sans-serif",
                 fontSize: "10px",
@@ -474,7 +458,7 @@ function ProjectCard({ project, index }) {
                 {String(index + 1).padStart(2, "0")} / PROJECT
               </div>
 
-              {/* Title */}
+             
               <h2 style={{
                 fontFamily: "Oswald, sans-serif",
                 fontSize: "clamp(2.4rem, 4vw, 3.8rem)",
@@ -488,10 +472,9 @@ function ProjectCard({ project, index }) {
                 {project.title}
               </h2>
 
-              {/* Amber rule */}
               <div style={{ width: "48px", height: "2px", background: "#F5A623", marginBottom: "22px" }} />
 
-              {/* Description — larger */}
+             
               <p style={{
                 fontFamily: "Inter, sans-serif",
                 fontSize: "17px",
@@ -505,12 +488,12 @@ function ProjectCard({ project, index }) {
                 {project.description}
               </p>
 
-              {/* Tech tags */}
+            
               <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "36px" }}>
                 {project.stack.map((t) => <TechTag key={t} label={t} />)}
               </div>
 
-              {/* CTAs */}
+            
               <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
                 {project.live && <PrimaryBtn href={project.live} label="LIVE DEMO ↗" />}
                 {project.github && <GhostLink href={project.github} label="GITHUB →" />}
@@ -563,9 +546,7 @@ function GhostLink({ href, label }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════
-   TIMELINE
-══════════════════════════════════════════════════════ */
+
 export const Timeline = ({ data }) => {
   const ref          = useRef(null);
   const containerRef = useRef(null);
@@ -590,7 +571,7 @@ export const Timeline = ({ data }) => {
   return (
     <div ref={containerRef} style={{ width: "100%", background: "#0a0a0a", position: "relative" }}>
 
-      {/* Cards section */}
+     
       <div
         ref={ref}
         style={{
@@ -600,7 +581,7 @@ export const Timeline = ({ data }) => {
           padding: "80px 0 180px",
         }}
       >
-        {/* Centre timeline line */}
+       
         <div style={{
           position: "absolute",
           left: "50%",
@@ -619,7 +600,7 @@ export const Timeline = ({ data }) => {
           }} />
         </div>
 
-        {/* Cards */}
+    
         <div style={{ display: "flex", flexDirection: "column", gap: "160px" }}>
           {data.map((project, i) => (
             <ProjectCard key={i} project={project} index={i} />
@@ -630,9 +611,7 @@ export const Timeline = ({ data }) => {
   );
 };
 
-/* ═══════════════════════════════════════════════════
-   DEFAULT PROJECT DATA  — swap for your real projects
-══════════════════════════════════════════════════════ */
+
 const defaultProjects = [
   {
     title: "NAGRIK RAKSHAK",
@@ -680,9 +659,7 @@ const defaultProjects = [
   },
 ];
 
-/* ═══════════════════════════════════════════════════
-   EXPORT — drop <TimelineDemo /> in your App.jsx
-══════════════════════════════════════════════════════ */
+
 export function TimelineDemo() {
   return (
     <div style={{ width: "100%", background: "#0a0a0a" }}>

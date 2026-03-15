@@ -138,7 +138,7 @@ const ARC_CARD_ANGLES = MERN_CARDS.map(
 function NavBar({ items }) {
   const [activeTab, setActiveTab] = useState(items[0].name);
 
-  // ── Custom smooth eased scroll ──
+  
   function smoothScrollTo(targetY, duration = 1200) {
     const startY = window.scrollY;
     const diff   = targetY - startY;
@@ -159,14 +159,14 @@ function NavBar({ items }) {
     requestAnimationFrame(step);
   }
 
-  // ── Section scroll targets ──
+  
   function getScrollTarget(name) {
     switch (name) {
       case "Home": {
-        return 0; // top of page
+        return 0; 
       }
       case "Skills": {
-        // Skills lives at ~62% through the 300vh pin wrapper
+       
         const pin = document.getElementById("home");
         return pin ? pin.offsetTop + pin.scrollHeight * 0.62 : 0;
       }
@@ -189,7 +189,7 @@ function NavBar({ items }) {
     smoothScrollTo(getScrollTarget(item.name), 1400);
   }
 
-  // ── Auto-highlight active tab on scroll ──
+ 
   useEffect(() => {
     function onScroll() {
       const scrollY = window.scrollY;
@@ -217,7 +217,7 @@ function NavBar({ items }) {
     <div className="fixed top-0 left-0 right-0 z-[999] px-12 py-4  ">
       <div className="flex items-center justify-between bg-black/90 border border-white/10 backdrop-blur-lg py-3 px-10 rounded-full shadow-2xl">
 
-        {/* Logo */}
+      
         <span style={{
           fontFamily: "Oswald", fontSize: "25px", fontWeight: 700,
           color: "#F5A623", letterSpacing: "0.05em", cursor: "pointer",
@@ -227,7 +227,7 @@ function NavBar({ items }) {
           PORTFOLIO
         </span>
 
-        {/* Nav items */}
+        
         <div className="flex items-center gap-2">
           {items.map((item) => {
             const Icon    = item.icon;
@@ -263,7 +263,7 @@ function NavBar({ items }) {
           })}
         </div>
 
-        {/* HIRE ME */}
+       
         <a
           href="#contact"
           onClick={(e) => {
@@ -675,8 +675,8 @@ style={{
   
      {(() => {
       
-const ODOMETER_X = "20%";   // move left/right easily
-const ODOMETER_Y = "-240px"; // move up/down easily
+const ODOMETER_X = "20%";   
+const ODOMETER_Y = "-240px"; 
 
 const CENTER_X = 550;
 const CENTER_Y = 250;
@@ -762,13 +762,13 @@ top:"0"
 
 <defs>
 
-{/* glass gradient */}
+
 <radialGradient id="glass">
 <stop offset="0%" stopColor="#ffffff"/>
 <stop offset="100%" stopColor="#eaeaea"/>
 </radialGradient>
 
-{/* animated sweep */}
+
 <linearGradient id="sweep" gradientUnits="userSpaceOnUse">
 <stop offset="0%" stopColor="#ffffff00"/>
 <stop offset="50%" stopColor="#ffffffaa"/>
@@ -783,26 +783,26 @@ repeatCount="indefinite"
 />
 </linearGradient>
 
-{/* neon glow */}
+
 <filter id="neon">
 <feGaussianBlur stdDeviation="6"/>
 </filter>
 
-{/* shadow */}
+
 <filter id="shadow">
 <feDropShadow dx="0" dy="10" stdDeviation="12" floodOpacity="0.25"/>
 </filter>
 
 </defs>
 
-{/* dial base */}
+
 <path
 d={thick(OUTER,INNER,DEG_START,DEG_END)}
 fill="url(#glass)"
 filter="url(#shadow)"
 />
 
-{/* segments */}
+
 {MERN_CARDS.map((card,i)=>{
 
 const s = DEG_START + ((DEG_END-DEG_START)/segCount)*i
@@ -835,7 +835,7 @@ filter="url(#neon)"
 )
 
 })}
-{/* MERN letters on segments */}
+
 {["Mongo","Express","React","Node"].map((letter,i)=>{
 
 const s = DEG_START + ((DEG_END-DEG_START)/segCount)*i
@@ -847,7 +847,7 @@ return(
 
 <g key={i}>
 
-{/* invisible path for text */}
+
 <path
 id={pathId}
 d={arc((OUTER+INNER)/2 , s+3 , e-3)}
@@ -879,7 +879,7 @@ textAnchor="middle"
 
 })}
 
-{/* sweep highlight */}
+
 <path
 d={arc(OUTER-6,DEG_START,DEG_END)}
 stroke="url(#sweep)"
@@ -888,7 +888,7 @@ strokeLinecap="round"
 fill="none"
 />
 
-{/* outer rim */}
+
 <path
 d={arc(OUTER,DEG_START,DEG_END)}
 stroke="#cfcfcf"
@@ -896,7 +896,7 @@ strokeWidth="3"
 fill="none"
 />
 
-{/* ticks */}
+
 {CARD_ANGLES.map((deg,i)=>{
 
 const [a1,a2] = pt(deg,INNER-12)
@@ -920,7 +920,7 @@ strokeWidth={active?3:1.5}
 
 })}
 
-{/* needle */}
+
 <g>
 
 <polygon
@@ -936,7 +936,7 @@ filter="url(#neon)"
 
 </svg>
 
-{/* cards */}
+
 
 {MERN_CARDS.map((card,i)=>{
 
@@ -1020,7 +1020,7 @@ filter:active?`drop-shadow(0 0 10px ${card.color})`:"grayscale(.6)"
     My SkillSet
   </h1>
 </motion.div>
-{/* ══ INFINITE SLIDER SECTION ══ */}
+
 <motion.section id="skills" style={{
   width: "100%",
   background: "#F8FAFC",
@@ -1034,7 +1034,7 @@ filter:active?`drop-shadow(0 0 10px ${card.color})`:"grayscale(.6)"
 }}>
   
 
-  {/* ROW 1 — left to right */}
+ 
   <div  style={{ width: "68%", marginLeft: "0px", overflow: "hidden" }}>
   <InfiniteSlider gap={5} duration={40} durationOnHover={100}>
     {sliderImagesTop.map((img) => (
@@ -1055,7 +1055,7 @@ filter:active?`drop-shadow(0 0 10px ${card.color})`:"grayscale(.6)"
 
   <div style={{ height: 20 }} /></div>
 
-  {/* ROW 2 — right to left */}
+  
   <div style={{ width: "68%", marginLeft: "0px", overflow: "hidden" }}>
   <InfiniteSlider gap={5} duration={40} durationOnHover={100} reverse>
     {sliderImagesBottom.map((img) => (
