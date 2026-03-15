@@ -183,11 +183,20 @@ function NavBar({ items }) {
     }
   }
 
-  function handleClick(e, item) {
-    e.preventDefault();
-    setActiveTab(item.name);
-    smoothScrollTo(getScrollTarget(item.name), 1400);
+ function handleClick(e, item) {
+  e.preventDefault();
+
+  if (item.download) {
+    const a = document.createElement("a");
+    a.href = item.url;
+    a.download = "Priyaansh_Pandey_Resume.pdf";
+    a.click();
+    return;
   }
+
+  setActiveTab(item.name);
+  smoothScrollTo(getScrollTarget(item.name), 1400);
+}
 
  
   useEffect(() => {
