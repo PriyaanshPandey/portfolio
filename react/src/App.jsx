@@ -379,7 +379,8 @@ const smooth = useSpring(scrollYProgress, { stiffness: 80, damping: 20 });
 const initialTextOpacity = useTransform(smooth, [0, 0.3], [1, 0]);
 const heroOpacity        = useTransform(smooth, [0.2, 0.55], [1, 0]);
 const heroX              = useTransform(smooth, [0, 0.5], ["0%", "125%"]);
-const splashX            = useTransform(smooth, [0, 0.6], ["-50%", "15%"]);
+const splashX        = useTransform(smooth, [0.12, 0.62], ["-50%", "15%"]);
+const splashOpacity  = useTransform(smooth, [0.28, 0.50], [1, 0]);
 const leftOpacity        = useTransform(smooth, [0.2, 0.55], [0, 1]);
 const leftX              = useTransform(smooth, [0.25, 0.9], ["140%", "5%"]);
 const newTextOpacity     = useTransform(smooth, [0.4, 0.75], [0, 1]);
@@ -460,10 +461,11 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
     position: "absolute",
     left: "49%",
     x: splashX,
+    opacity: splashOpacity,
     top: "5%",
     height: "110%",
     rotate: 90,
-    zIndex: 2,
+    zIndex: 1,
   }}
 />
      <motion.img
@@ -669,7 +671,8 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
 style={{
   opacity: odometerOpacity,
   y: odometerY,
-  pointerEvents: "auto"
+  pointerEvents: "auto",
+  zIndex: 999,
 }}
 >
   
@@ -897,27 +900,19 @@ fill="none"
 />
 
 
-{CARD_ANGLES.map((deg,i)=>{
-
-const [a1,a2] = pt(deg,INNER-12)
-const [b1,b2] = pt(deg,OUTER+8)
-
-const active = arcActive===i
-
-return(
-
-<line
-key={i}
-x1={a1}
-y1={a2}
-x2={b1}
-y2={b2}
-stroke={active?MERN_CARDS[i].color:"#aaa"}
-strokeWidth={active?3:1.5}
-/>
-
-)
-
+{Array.from({ length: segCount + 1 }, (_, i) => {
+  const deg = DEG_START + SEG_SIZE * i;
+  const [a1, a2] = pt(deg, INNER + 2);
+  const [b1, b2] = pt(deg, OUTER - 2);
+  return (
+    <line
+      key={i}
+      x1={a1} y1={a2}
+      x2={b1} y2={b2}
+      stroke="rgba(255,255,255,0.6)"
+      strokeWidth={2}
+    />
+  );
 })}
 
 

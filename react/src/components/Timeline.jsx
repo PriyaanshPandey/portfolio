@@ -126,22 +126,7 @@ function ParallaxHero() {
           }}
         >
        
-          <div style={{
-            fontFamily: "Oswald, sans-serif",
-            fontSize: "11px",
-            fontWeight: 700,
-            letterSpacing: "8px",
-            color: "#F5A623",
-            marginBottom: "28px",
-            display: "flex",
-            alignItems: "center",
-            gap: "14px",
-          }}>
-            <div style={{ width: "30px", height: "1px", background: "#F5A623" }} />
-            SELECTED WORK
-            <div style={{ width: "30px", height: "1px", background: "#F5A623" }} />
-          </div>
-
+          
           
           <h1 style={{
             fontFamily: "Oswald, sans-serif",
@@ -162,16 +147,7 @@ function ParallaxHero() {
             </span>
           </h1>
 
-          <p style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "17px",
-            color: "rgba(255,255,255,0.4)",
-            marginTop: "28px",
-            letterSpacing: "1px",
-          }}>
-            Things I've built that I'm proud of
-          </p>
-
+         
           
           <motion.div
             animate={{ y: [0, 10, 0] }}
@@ -404,9 +380,9 @@ function ProjectCard({ project, index }) {
                 src={project.image}
                 alt={project.title}
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
+                  width: "auto",
+                  height: "auto",
+                  
                   objectPosition: "top center",
                   transform: imgHov ? "scale(1.06)" : "scale(1.0)",
                   transition: "transform 0.6s cubic-bezier(0.16,1,0.3,1)",
