@@ -26,7 +26,7 @@ import pythonImg from "./assets/python.png";
 import figmaImg  from "./assets/figma.png";
 import reduxImg  from "./assets/redux.png";
 import { AnimatedThemeToggler } from "./components/AnimatedThemeToggler";
-
+import resumePdf from "./assets/resume.pdf";
 
 
 
@@ -392,7 +392,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
     { name: "Home", url: "#home", icon: Home },
     { name: "Skills", url: "#skills", icon: User },
     { name: "Projects", url: "#projects", icon: Briefcase },
-    { name: "Resume", url: "#", icon: FileText },
+    { name: "Resume", url: resumePdf, icon: FileText },
   ];
  
 
