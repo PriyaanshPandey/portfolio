@@ -189,7 +189,7 @@ function NavBar({ items }) {
   if (item.download) {
     const a = document.createElement("a");
     a.href = item.url;
-    a.download = "Priyaansh_Pandey_Resume.pdf";
+    a.download = "resume.pdf";
     a.click();
     return;
   }
@@ -401,7 +401,7 @@ const odometerY = useTransform(smooth, [0.55, 0.7], [80, 0]);
     { name: "Home", url: "#home", icon: Home },
     { name: "Skills", url: "#skills", icon: User },
     { name: "Projects", url: "#projects", icon: Briefcase },
-    { name: "Resume", url: resumePdf, icon: FileText },
+    { name: "Resume", url: resumePdf, icon: FileText, download: true },
   ];
  
 
